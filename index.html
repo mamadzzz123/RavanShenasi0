@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>غربالگری روان‌شناختی شخصیتی</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #09111f;
+      --panel: rgba(17, 29, 49, .84);
+      --panel-2: #111e32;
+      --line: rgba(255, 255, 255, .10);
+      --text: #eef4ff;
+      --muted: #9aaac2;
+      --primary: #7b72ff;
+      --primary-2: #a06cff;
+      --cyan: #52d6dc;
+      --green: #54d6a3;
+      --red: #ff6f83;
+      --shadow: 0 24px 70px rgba(0, 0, 0, .32);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Vazirmatn", Tahoma, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 12% 12%, rgba(91, 95, 255, .18), transparent 35%),
+        radial-gradient(ellipse at 88% 30%, rgba(37, 193, 202, .12), transparent 32%),
+        radial-gradient(ellipse at 54% 100%, rgba(132, 87, 255, .12), transparent 38%),
+        var(--bg);
+      overflow-x: hidden;
+    }
+
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      filter: blur(95px);
+      opacity: .14;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    body::before { background: #655dff; top: -120px; right: -100px; }
+    body::after { background: #21b8bd; bottom: -160px; left: -100px; }
+
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .app-shell {
+      width: min(1160px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 26px 0 52px;
+    }
+
+    .topbar {
+      min-height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 17px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: linear-gradient(145deg, #8d80ff, #4d47bb);
+      box-shadow: 0 10px 28px rgba(105, 93, 255, .35), inset 0 1px 1px rgba(255,255,255,.5);
+      font-size: 21px;
+    }
+
+    .topbar-actions { display: flex; align-items: center; gap: 10px; }
+
+    .glass, .card {
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(20, 34, 56, .91), rgba(12, 22, 39, .91));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(30px, 6vw, 68px);
+      border-radius: 34px;
+      min-height: 355px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 26px;
+      background:
+        radial-gradient(circle at 78% 48%, rgba(107, 93, 255, .26), transparent 28%),
+        linear-gradient(135deg, rgba(26, 39, 68, .94), rgba(14, 26, 45, .94));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 32px 90px rgba(0,0,0,.34);
+    }
+
+    .hero-copy { max-width: 690px; position: relative; z-index: 2; }
+    .eyebrow {
+      color: #a7a0ff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 2px;
+      border-radius: 3px;
+      background: var(--cyan);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    .hero h1 {
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1.45;
+      margin-bottom: 12px;
+      letter-spacing: -.8px;
+    }
+
+    .hero p { max-width: 590px; color: #b8c5d9; line-height: 2; margin-bottom: 0; }
+
+    .hero-art {
+      position: absolute;
+      left: 7%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 220px;
+      height: 220px;
+      border-radius: 45% 55% 60% 40%;
+      background: linear-gradient(145deg, rgba(129, 117, 255, .7), rgba(61, 213, 221, .18));
+      box-shadow: inset -18px -18px 38px rgba(8, 13, 31, .42), inset 10px 10px 26px rgba(255,255,255,.18), 0 25px 70px rgba(86, 79, 255, .24);
+      transform: translateY(-50%) rotate(-16deg);
+      opacity: .78;
+    }
+
+    .hero-art::before, .hero-art::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      inset: 24px;
+      transform: rotate(35deg) scaleX(.72);
+    }
+
+    .hero-art::after { inset: 48px; transform: rotate(-38deg) scaleX(.75); }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 30px 2px 15px;
+    }
+
+    .section-heading h2 { font-size: 21px; margin-bottom: 4px; }
+    .section-heading p { color: var(--muted); font-size: 13px; margin-bottom: 0; }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .choice-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+      padding: 28px;
+      border-radius: var(--radius);
+      text-align: right;
+      color: var(--text);
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+
+    .choice-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(137, 128, 255, .55);
+      box-shadow: 0 28px 70px rgba(35, 32, 114, .34);
+    }
+
+    .choice-card::after {
+      content: "";
+      width: 150px;
+      height: 150px;
+      position: absolute;
+      left: -48px;
+      bottom: -63px;
+      border-radius: 42%;
+      background: linear-gradient(145deg, rgba(125, 113, 255, .3), rgba(76, 211, 219, .06));
+      transform: rotate(30deg);
+    }
+
+    .choice-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: linear-gradient(145deg, rgba(129, 116, 255, .35), rgba(78, 210, 218, .12));
+      border: 1px solid rgba(255,255,255,.13);
+      font-size: 25px;
+      margin-bottom: 20px;
+      box-shadow: inset 0 1px rgba(255,255,255,.18);
+    }
+
+    .choice-card h3 { margin-bottom: 7px; font-size: 19px; }
+    .choice-card p { color: var(--muted); font-size: 13px; line-height: 1.9; margin-bottom: 0; max-width: 440px; }
+    .choice-arrow { position: absolute; left: 25px; top: 29px; color: #a9a3ff; font-size: 22px; }
+
+    .page-title {
+      margin: 0 0 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: clamp(22px, 4vw, 30px);
+    }
+
+    .page-title .title-icon {
+      width: 48px; height: 48px; display: grid; place-items: center;
+      border-radius: 16px; background: rgba(123,114,255,.17); color: #b7afff;
+      border: 1px solid rgba(140,130,255,.22); font-size: 22px;
+    }
+
+    .card { border-radius: var(--radius); padding: 24px; }
+    .narrow { max-width: 520px; margin: 40px auto; }
+    .card h2 { font-size: 20px; margin-bottom: 8px; }
+    .muted { color: var(--muted); line-height: 1.9; }
+    .small { font-size: 13px; }
+
+    .field { margin-top: 18px; }
+    .field label, .field-label {
+      display: block;
+      color: #dce6f5;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"], input[type="password"], textarea {
+      width: 100%;
+      color: var(--text);
+      background: rgba(5, 13, 26, .62);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 13px;
+      padding: 13px 15px;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    textarea { min-height: 88px; resize: vertical; line-height: 1.8; }
+    input:focus, textarea:focus {
+      border-color: rgba(132, 122, 255, .8);
+      box-shadow: 0 0 0 3px rgba(123, 114, 255, .13);
+    }
+
+    input::placeholder, textarea::placeholder { color: #6f8099; }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 11px 17px;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 13px;
+      transition: transform .18s, filter .18s, background .18s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+    .btn-primary {
+      background: linear-gradient(135deg, #8c7cff, #685de1);
+      box-shadow: 0 9px 24px rgba(106, 91, 231, .24), inset 0 1px rgba(255,255,255,.24);
+    }
+    .btn-secondary { background: rgba(255,255,255,.06); border-color: var(--line); }
+    .btn-danger { background: rgba(255, 91, 116, .12); border-color: rgba(255, 111, 131, .26); color: #ff9aaa; }
+    .btn-success { background: linear-gradient(135deg, #33bd97, #228d8b); box-shadow: 0 9px 24px rgba(42, 184, 155, .15); }
+    .btn-small { padding: 8px 11px; font-size: 12px; border-radius: 10px; }
+    .btn-full { width: 100%; margin-top: 20px; }
+    .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+    .form-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .toolbar h2 { margin: 0; font-size: 20px; }
+
+    .survey-grid { display: grid; gap: 13px; }
+    .survey-card {
+      padding: 19px;
+      border: 1px solid var(--line);
+      background: rgba(16, 28, 47, .78);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      transition: border-color .2s, transform .2s;
+    }
+
+    .survey-card:hover { border-color: rgba(128, 119, 255, .46); transform: translateY(-2px); }
+    .survey-card h3 { margin: 0 0 6px; font-size: 16px; }
+    .survey-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+    .survey-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+
+    .badge {
+      font-size: 11px;
+      padding: 5px 9px;
+      border-radius: 20px;
+      color: #9ce7cc;
+      background: rgba(64, 201, 153, .1);
+      border: 1px solid rgba(64, 201, 153, .2);
+      white-space: nowrap;
+    }
+
+    .badge.purple { color: #b9b2ff; background: rgba(123,114,255,.1); border-color: rgba(123,114,255,.2); }
+    .badge.gray { color: #bbc6d7; background: rgba(255,255,255,.06); border-color: var(--line); }
+
+    .empty {
+      text-align: center;
+      padding: 38px 20px;
+      border: 1px dashed rgba(255,255,255,.15);
+      border-radius: 18px;
+      color: var(--muted);
+      line-height: 2;
+    }
+
+    .empty .empty-icon { font-size: 30px; display: block; margin-bottom: 8px; }
+
+    .question-editor {
+      border: 1px solid rgba(255,255,255,.11);
+      background: rgba(6, 15, 29, .42);
+      border-radius: 18px;
+      padding: 19px;
+      margin-top: 15px;
+    }
+
+    .question-editor-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .question-editor-head strong { font-size: 14px; }
+    .question-editor-head .number {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      margin-left: 7px;
+      background: rgba(123,114,255,.2);
+      color: #c4beff;
+    }
+
+    .option-row { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
+    .option-row input { flex: 1; }
+    .remove-option {
+      border: 1px solid rgba(255, 111, 131, .2);
+      background: rgba(255, 111, 131, .08);
+      color: #ff9aaa;
+      width: 40px; height: 42px;
+      border-radius: 11px;
+    }
+
+    .question-image-preview {
+      max-width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      display: block;
+      margin-top: 12px;
+      border-radius: 13px;
+      border: 1px solid var(--line);
+    }
+
+    .upload-label {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: #c8c3ff;
+      border: 1px dashed rgba(146, 136, 255, .4);
+      background: rgba(123,114,255,.08);
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    .upload-label input { display: none; }
+    .question-body { line-height: 2; color: #dbe5f4; white-space: pre-wrap; }
+    .response-block {
+      padding: 17px;
+      margin-top: 14px;
+      border-radius: 15px;
+      background: rgba(6, 15, 29, .47);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .response-person {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 12px;
+    }
+
+    .answer-line {
+      display: grid;
+      grid-template-columns: minmax(160px, .8fr) 1fr;
+      gap: 12px;
+      padding: 8px 0;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .answer-line .answer-question { color: var(--muted); }
+    .answer-line .answer-value { color: #a9f0d4; }
+
+    .respondent-form { max-width: 620px; margin: 30px auto; }
+    .name-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .question-card {
+      padding: 23px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(16, 28, 47, .78);
+      margin-bottom: 16px;
+    }
+
+    .question-card h3 { font-size: 16px; line-height: 1.9; margin-bottom: 13px; }
+    .question-number {
+      color: #aca5ff;
+      font-size: 12px;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .answer-option {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 12px 13px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(4, 12, 24, .38);
+      border-radius: 12px;
+      margin-top: 8px;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      line-height: 1.7;
+    }
+
+    .answer-option:hover { border-color: rgba(135, 125, 255, .45); background: rgba(123,114,255,.07); }
+    .answer-option input { accent-color: #8b7dff; width: 17px; height: 17px; }
+    .survey-cover {
+      padding: 23px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, rgba(124,112,255,.16), rgba(61,210,218,.07));
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .success-card {
+      max-width: 620px;
+      margin: 70px auto;
+      text-align: center;
+      padding: 45px 30px;
+    }
+
+    .success-icon {
+      width: 78px; height: 78px;
+      border-radius: 26px;
+      display: grid; place-items: center;
+      margin: 0 auto 20px;
+      font-size: 35px;
+      color: #99f1cf;
+      background: rgba(69, 213, 162, .12);
+      border: 1px solid rgba(69, 213, 162, .28);
+      box-shadow: 0 16px 40px rgba(69, 213, 162, .1);
+    }
+
+    .toast {
+      position: fixed;
+      left: 22px;
+      bottom: 22px;
+      z-index: 20;
+      padding: 13px 17px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 13px;
+      background: #17253b;
+      color: var(--text);
+      box-shadow: var(--shadow);
+      animation: toastIn .25s ease;
+    }
+
+    @keyframes toastIn { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+
+    .footer-note {
+      color: #71819a;
+      text-align: center;
+      font-size: 11px;
+      margin-top: 34px;
+      line-height: 1.9;
+    }
+
+    @media (max-width: 700px) {
+      .app-shell { width: min(100% - 24px, 560px); padding-top: 14px; }
+      .topbar { margin-bottom: 20px; }
+      .brand { font-size: 14px; }
+      .brand-mark { width: 39px; height: 39px; }
+      .hero { min-height: 320px; border-radius: 25px; padding: 27px 23px; }
+      .hero-art { width: 140px; height: 140px; left: -20px; top: auto; bottom: -55px; transform: rotate(-16deg); opacity: .5; }
+      .choice-grid { grid-template-columns: 1fr; gap: 12px; }
+      .choice-card { min-height: 190px; padding: 22px; }
+      .card { padding: 19px; }
+      .survey-card { align-items: flex-start; flex-direction: column; gap: 14px; }
+      .survey-card .form-actions { margin-top: 0; }
+      .name-fields { grid-template-columns: 1fr; gap: 0; }
+      .answer-line { grid-template-columns: 1fr; gap: 2px; }
+      .section-heading { align-items: flex-start; flex-direction: column; }
+      .topbar-actions .btn { padding: 9px 11px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell" id="app"></main>
+  <script>
+    // داده‌های اصلی روی سرور Vercel و در مخزن خصوصی GitHub ذخیره می‌شوند.
+    // localStorage فقط برای انتقال یک‌باره‌ی اطلاعات نسخه‌ی قدیمی بررسی می‌شود.
+    const LEGACY_STORAGE_KEY = "psy_screening_surveys_v1";
+
+    let db = { surveys: [] };
+    let screen = "home";
+    let loginError = "";
+    let respondentFirst = "";
+    let respondentLast = "";
+    let respondentName = "";
+    let currentSurveyId = null;
+    let adminDetailsId = null;
+    let builderOpen = false;
+    let adminSessionPassword = "";
+    let draft = { title: "", description: "", questions: [] };
+
+    async function apiRequest(url, options = {}) {
+      const response = await fetch(url, {
+        ...options,
+        headers: { ...(options.headers || {}) }
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(result.error || `خطای سرور (${response.status})`);
+      }
+      return result;
+    }
+
+    async function refreshDB(admin = false, name = respondentName) {
+      const url = admin
+        ? "/api/surveys?view=admin"
+        : `/api/surveys?name=${encodeURIComponent(name || "")}`;
+      const options = admin
+        ? { headers: { "x-admin-password": adminSessionPassword } }
+        : {};
+      const result = await apiRequest(url, options);
+      db = { surveys: Array.isArray(result.surveys) ? result.surveys : [] };
+      return db;
+    }
+
+    async function migrateLegacyDataIfNeeded() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(LEGACY_STORAGE_KEY) || "null");
+        if (!saved || !Array.isArray(saved.surveys) || saved.surveys.length === 0 || db.surveys.length > 0) return;
+        const shouldImport = confirm("در این مرورگر، اطلاعاتی از نسخه‌ی قدیمی سایت پیدا شد. آیا می‌خواهید پرسشنامه‌ها و پاسخ‌های قبلی به مخزن مشترک منتقل شوند؟");
+        if (!shouldImport) return;
+        await apiRequest("/api/surveys", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "x-admin-password": adminSessionPassword },
+          body: JSON.stringify({ action: "import", surveys: saved.surveys })
+        });
+        await refreshDB(true);
+        showToast("اطلاعات نسخه‌ی قبلی به سرور منتقل شد.");
+      } catch (error) {
+        console.error(error);
+        alert("انتقال اطلاعات قبلی انجام نشد: " + error.message);
+      }
+    }
+
+    function esc(value = "") {
+      return String(value).replace(/[&<>"']/g, ch => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[ch]));
+    }
+
+    function makeId() {
+      return (window.crypto && crypto.randomUUID)
+        ? crypto.randomUUID()
+        : "s" + Date.now() + Math.random().toString(16).slice(2);
+    }
+
+    function normalizeName(name) {
+      return String(name).trim().toLocaleLowerCase("fa").replace(/\s+/g, " ");
+    }
+
+    function formatDate(value) {
+      try {
+        return new Date(value).toLocaleString("fa-IR", { dateStyle: "medium", timeStyle: "short" });
+      } catch {
+        return "";
+      }
+    }
+
+    function topbar(actions = "") {
+      return `
+        <header class="topbar">
+          <a class="brand" href="#" onclick="goHome();return false;">
+            <span class="brand-mark">◈</span>
+            <span>غربالگری روان‌شناختی شخصیتی</span>
+          </a>
+          <div class="topbar-actions">${actions}</div>
+        </header>`;
+    }
+
+    function render() {
+      const app = document.getElementById("app");
+      if (screen === "home") app.innerHTML = renderHome();
+      else if (screen === "adminLogin") app.innerHTML = renderAdminLogin();
+      else if (screen === "admin") app.innerHTML = renderAdmin();
+      else if (screen === "respondent") app.innerHTML = renderRespondent();
+      else if (screen === "answerSurvey") app.innerHTML = renderAnswerSurvey();
+      else if (screen === "thanks") app.innerHTML = renderThanks();
+      else app.innerHTML = renderHome();
+    }
+
+    function renderHome() {
+      return `
+        ${topbar()}
+        <section class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">فضایی امن برای شناخت بهتر</span>
+            <h1>غربالگری روان‌شناختی<br>شخصیتی</h1>
+            <p>این سوالات بدون هیچ بی احترامی صرفا جهت کنجکاوی نسبت به وضعیت روانشناسی جامعه طراحی شدند.</p>
+          </div>
+          <div class="hero-art" aria-hidden="true"></div>
+        </section>
+
+        <div class="section-heading">
+          <div><h2>برای ادامه انتخاب کنید</h2><p>یکی از پنل‌های زیر را باز کنید.</p></div>
+        </div>
+
+        <section class="choice-grid">
+          <button class="choice-card glass" onclick="openAdminLogin()">
+            <span class="choice-arrow">←</span>
+            <span class="choice-icon">⚙</span>
+            <h3>پنل مدیریت</h3>
+            <p>ساخت پرسشنامه، انتشار آن و مشاهده‌ی پاسخ‌های ثبت‌شده.</p>
+          </button>
+          <button class="choice-card glass" onclick="openRespondent()">
+            <span class="choice-arrow">←</span>
+            <span class="choice-icon">✦</span>
+            <h3>پنل پاسخ‌دهنده</h3>
+            <p>مشاهده‌ی پرسشنامه‌های فعال و ثبت پاسخ با نام و نام خانوادگی.</p>
+          </button>
+        </section>
+
+        <p class="footer-note">حقوق ولی و ممد محفوظ است 1405.</p>`;
+    }
+
+    function renderAdminLogin() {
+      return `
+        ${topbar(`<button class="btn btn-secondary" onclick="goHome()">بازگشت</button>`)}
+        <section class="card narrow">
+          <div class="page-title"><span class="title-icon">⚙</span><span>ورود به پنل مدیریت</span></div>
+          <p class="muted small">برای مدیریت پرسشنامه‌ها، رمز عبور را وارد کنید.</p>
+          <form onsubmit="adminLogin(event)">
+            <div class="field">
+              <label for="adminPassword">رمز عبور</label>
+              <input id="adminPassword" type="password" placeholder="رمز عبور مدیریت" autocomplete="current-password" required>
+            </div>
+            ${loginError ? `<p style="color:#ff8e9d;font-size:13px;margin:12px 0 0">${esc(loginError)}</p>` : ""}
+            <button class="btn btn-primary btn-full" type="submit">ورود به پنل</button>
+          </form>
+        </section>`;
+    }
+
+    function renderAdmin() {
+      const surveys = [...db.surveys].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const detail = surveys.find(s => s.id === adminDetailsId);
+
+      return `
+        ${topbar(`
+          <button class="btn btn-secondary" onclick="goHome()">صفحه‌ی اصلی</button>
+          <button class="btn btn-secondary" onclick="adminLogout()">خروج</button>
+        `)}
+        <div class="page-title"><span class="title-icon">⚙</span><span>پنل مدیریت</span></div>
+
+        <section class="card">
+          <div class="toolbar">
+            <div><h2>مدیریت پرسشنامه‌ها</h2><p class="muted small" style="margin:6px 0 0">پرسشنامه‌ی جدید بسازید یا پاسخ‌های ثبت‌شده را بررسی کنید.</p></div>
+            <button class="btn btn-primary" onclick="toggleBuilder()">${builderOpen ? "بستن فرم ساخت" : "＋ ساخت پرسشنامه جدید"}</button>
+          </div>
+
+          ${builderOpen ? renderBuilder() : ""}
+
+          <div class="section-heading" style="margin-top:30px">
+            <div><h2>پرسشنامه‌های منتشرشده</h2><p>پاسخ‌دهندگان فقط پرسشنامه‌های منتشرشده را می‌بینند.</p></div>
+            <span class="badge purple">${surveys.length} پرسشنامه</span>
+          </div>
+
+          ${surveys.length ? `<div class="survey-grid">${surveys.map(s => renderAdminSurveyCard(s)).join("")}</div>` : `
+            <div class="empty"><span class="empty-icon">▱</span>هنوز پرسشنامه‌ای منتشر نشده است.<br>برای شروع، روی «ساخت پرسشنامه جدید» بزنید.</div>
+          `}
+
+          ${detail ? renderSurveyDetails(detail) : ""}
+        </section>
+        <p class="footer-note">اطلاعات پرسشنامه‌ها و پاسخ‌ها در مخزن مشترک ذخیره می‌شود.</p>`;
+    }
+
+    function renderBuilder() {
+      return `
+        <div class="question-editor" style="margin-top:18px">
+          <div class="field" style="margin-top:0">
+            <label for="draftTitle">عنوان پرسشنامه</label>
+            <input id="draftTitle" type="text" maxlength="120" placeholder="مثلاً پرسشنامه‌ی شناخت ویژگی‌های شخصیتی"
+              value="${esc(draft.title)}" oninput="draft.title=this.value">
+          </div>
+          <div class="field">
+            <label for="draftDescription">توضیحات (اختیاری)</label>
+            <textarea id="draftDescription" maxlength="500" placeholder="توضیح کوتاهی برای پاسخ‌دهندگان بنویسید."
+              oninput="draft.description=this.value">${esc(draft.description)}</textarea>
+          </div>
+
+          <div class="section-heading" style="margin-top:26px">
+            <div><h2>سوال‌ها</h2><p>برای هر سوال می‌توانید تصویر و هر تعداد گزینه اضافه کنید.</p></div>
+            <span class="badge purple">${draft.questions.length} سوال</span>
+          </div>
+
+          ${draft.questions.length ? draft.questions.map((q, i) => renderQuestionEditor(q, i)).join("") : `
+            <div class="empty" style="padding:22px"><span class="empty-icon">✎</span>هنوز سوالی اضافه نشده است.</div>
+          `}
+
+          <div class="form-actions">
+            <button class="btn btn-secondary" onclick="addQuestion()">＋ سوال جدید</button>
+            <button class="btn btn-success" onclick="publishSurvey()">▶ انتشار پرسشنامه</button>
+          </div>
+        </div>`;
+    }
+
+    function renderQuestionEditor(q, i) {
+      return `
+        <div class="question-editor">
+          <div class="question-editor-head">
+            <strong><span class="number">${i + 1}</span>سوال ${i + 1}</strong>
+            <button class="btn btn-danger btn-small" onclick="removeQuestion(${i})">حذف سوال</button>
+          </div>
+          <div class="field" style="margin-top:0">
+            <label for="question-${i}">متن سوال</label>
+            <textarea id="question-${i}" placeholder="متن سوال را وارد کنید..."
+              oninput="draft.questions[${i}].text=this.value">${esc(q.text)}</textarea>
+          </div>
+
+          <div class="field">
+            <span class="field-label">تصویر سوال (اختیاری)</span>
+            <label class="upload-label">▧ انتخاب تصویر
+              <input type="file" accept="image/*" onchange="handleQuestionImage(${i}, this)">
+            </label>
+            ${q.image ? `
+              <img class="question-image-preview" src="${q.image}" alt="تصویر سوال">
+              <button class="btn btn-danger btn-small" style="margin-top:9px" onclick="removeQuestionImage(${i})">حذف تصویر</button>
+            ` : ""}
+          </div>
+
+          <div class="field">
+            <span class="field-label">گزینه‌های پاسخ</span>
+            ${q.options.map((option, oi) => `
+              <div class="option-row">
+                <input type="text" maxlength="250" aria-label="گزینه ${oi + 1}"
+                  placeholder="متن گزینه ${oi + 1}"
+                  value="${esc(option)}"
+                  oninput="draft.questions[${i}].options[${oi}]=this.value">
+                <button class="remove-option" title="حذف گزینه" onclick="removeOption(${i},${oi})">×</button>
+              </div>
+            `).join("")}
+            <button class="btn btn-secondary btn-small" style="margin-top:11px" onclick="addOption(${i})">＋ افزودن گزینه</button>
+          </div>
+        </div>`;
+    }
+
+    function renderAdminSurveyCard(survey) {
+      const count = (survey.submissions || []).length;
+      const isOpen = adminDetailsId === survey.id;
+      return `
+        <article class="survey-card">
+          <div>
+            <h3>${esc(survey.title)}</h3>
+            <p>${esc(survey.description || "بدون توضیحات")}</p>
+            <div class="survey-meta">
+              <span class="badge">فعال</span>
+              <span class="badge purple">${survey.questions.length} سوال</span>
+              <span class="badge gray">${count} پاسخ</span>
+              <span class="muted small">انتشار: ${formatDate(survey.createdAt)}</span>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-secondary btn-small" onclick="toggleDetails('${esc(survey.id)}')">${isOpen ? "بستن پاسخ‌ها" : "مشاهده پاسخ‌ها"}</button>
+            <button class="btn btn-danger btn-small" onclick="deleteSurvey('${esc(survey.id)}')">حذف</button>
+          </div>
+        </article>`;
+    }
+
+    function renderSurveyDetails(survey) {
+      const submissions = [...(survey.submissions || [])].sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+      return `
+        <section class="question-editor" style="margin-top:20px">
+          <div class="toolbar">
+            <div><h2>پاسخ‌های «${esc(survey.title)}»</h2><p class="muted small" style="margin:5px 0 0">${submissions.length} نفر پاسخ ثبت کرده‌اند.</p></div>
+          </div>
+          ${submissions.length ? submissions.map((person, pi) => `
+            <article class="response-block">
+              <div class="response-person">
+                <strong>${esc(person.name)}</strong>
+                <span class="muted small">${formatDate(person.submittedAt)}</span>
+              </div>
+              ${(person.answers || []).map((a, ai) => `
+                <div class="answer-line">
+                  <span class="answer-question">${ai + 1}. ${esc(a.question)}</span>
+                  <span class="answer-value">${esc(a.answer)}</span>
+                </div>
+              `).join("")}
+            </article>
+          `).join("") : `<div class="empty">هنوز پاسخی برای این پرسشنامه ثبت نشده است.</div>`}
+        </section>`;
+    }
+
+    function renderRespondent() {
+      const actions = `<button class="btn btn-secondary" onclick="goHome()">صفحه‌ی اصلی</button>`;
+      if (!respondentName) {
+        return `
+          ${topbar(actions)}
+          <section class="card respondent-form">
+            <div class="page-title"><span class="title-icon">✦</span><span>ورود پاسخ‌دهنده</span></div>
+            <p class="muted">برای مشاهده‌ی پرسشنامه‌ها، نام و نام خانوادگی خود را وارد کنید.</p>
+            <form onsubmit="enterRespondent(event)">
+              <div class="name-fields">
+                <div class="field"><label for="firstName">نام</label><input id="firstName" type="text" maxlength="60" autocomplete="given-name" required placeholder="نام"></div>
+                <div class="field"><label for="lastName">نام خانوادگی</label><input id="lastName" type="text" maxlength="80" autocomplete="family-name" required placeholder="نام خانوادگی"></div>
+              </div>
+              <button class="btn btn-primary btn-full" type="submit">مشاهده‌ی پرسشنامه‌ها</button>
+            </form>
+          </section>`;
+      }
+
+      const available = db.surveys.filter(s => s.published !== false);
+      return `
+        ${topbar(`
+          <span class="badge purple">${esc(respondentName)}</span>
+          <button class="btn btn-secondary" onclick="changeRespondent()">تغییر نام</button>
+          <button class="btn btn-secondary" onclick="goHome()">صفحه‌ی اصلی</button>
+        `)}
+        <div class="page-title"><span class="title-icon">✦</span><span>پرسشنامه‌های فعال</span></div>
+        <p class="muted" style="margin-top:-12px;margin-bottom:20px">پرسشنامه‌ی موردنظر را انتخاب کنید. هر پرسشنامه با این نام فقط یک‌بار قابل ثبت است.</p>
+        ${available.length ? `<div class="survey-grid">${available.map(s => {
+          const completed = Boolean(s.completed);
+          return `
+            <article class="survey-card">
+              <div>
+                <h3>${esc(s.title)}</h3>
+                <p>${esc(s.description || "برای مشاهده‌ی توضیحات بیشتر، پرسشنامه را باز کنید.")}</p>
+                <div class="survey-meta">
+                  <span class="badge purple">${s.questions.length} سوال</span>
+                  ${completed ? `<span class="badge gray">تکمیل‌شده</span>` : `<span class="badge">آماده‌ی پاسخ‌گویی</span>`}
+                </div>
+              </div>
+              <button class="btn ${completed ? "btn-secondary" : "btn-primary"}" ${completed ? "disabled" : `onclick="openSurvey('${esc(s.id)}')"`}>
+                ${completed ? "قبلاً پاسخ داده‌اید" : "شروع پرسشنامه"}
+              </button>
+            </article>`;
+        }).join("")}</div>` : `
+          <div class="empty"><span class="empty-icon">▱</span>در حال حاضر پرسشنامه‌ی فعالی وجود ندارد.</div>
+        `}`;
+    }
+
+    function renderAnswerSurvey() {
+      const survey = db.surveys.find(s => s.id === currentSurveyId && s.published !== false);
+      if (!survey) return `${topbar()}<div class="empty">این پرسشنامه در دسترس نیست.</div>`;
+
+      return `
+        ${topbar(`<button class="btn btn-secondary" onclick="backToSurveyList()">بازگشت به فهرست</button>`)}
+        <div class="survey-cover">
+          <span class="eyebrow">پاسخ‌دهنده: ${esc(respondentName)}</span>
+          <h1 style="font-size:25px;margin:5px 0 8px">${esc(survey.title)}</h1>
+          ${survey.description ? `<p class="muted" style="margin:0">${esc(survey.description)}</p>` : ""}
+          <p class="muted small" style="margin:10px 0 0">${survey.questions.length} سوال · لطفاً به همه‌ی سوال‌ها پاسخ دهید.</p>
+        </div>
+
+        <form onsubmit="submitResponse(event)">
+          ${survey.questions.map((q, i) => `
+            <section class="question-card">
+              <div class="question-number">سوال ${i + 1} از ${survey.questions.length}</div>
+              <h3>${esc(q.text)}</h3>
+              ${q.image ? `<img class="question-image-preview" src="${q.image}" alt="تصویر مربوط به سوال ${i + 1}" style="margin-bottom:14px">` : ""}
+              ${q.options.map((option, oi) => `
+                <label class="answer-option">
+                  <input type="radio" name="q_${i}" value="${oi}" required>
+                  <span>${esc(option)}</span>
+                </label>
+              `).join("")}
+            </section>
+          `).join("")}
+          <button class="btn btn-success btn-full" type="submit">ثبت و اتمام پرسشنامه</button>
+        </form>`;
+    }
+
+    function renderThanks() {
+      return `
+        ${topbar()}
+        <section class="card success-card">
+          <div class="success-icon">✓</div>
+          <h1 style="font-size:25px">پرسشنامه‌ی شما ثبت گردید</h1>
+          <p class="muted">از مشارکت شما سپاسگزاریم. نتیجه‌ی پرسشنامه به‌صورت حضوری به شما اعلام خواهد شد.</p>
+          <button class="btn btn-primary" onclick="backToSurveyList()">بازگشت به فهرست پرسشنامه‌ها</button>
+        </section>`;
+    }
+
+    function goHome() {
+      screen = "home";
+      adminSessionPassword = "";
+      db = { surveys: [] };
+      render();
+    }
+
+    function openAdminLogin() {
+      loginError = "";
+      screen = "adminLogin";
+      render();
+    }
+
+    async function adminLogin(event) {
+      event.preventDefault();
+      const password = document.getElementById("adminPassword").value;
+      try {
+        await apiRequest("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password })
+        });
+        adminSessionPassword = password;
+        await refreshDB(true);
+        await migrateLegacyDataIfNeeded();
+        screen = "admin";
+        builderOpen = false;
+        adminDetailsId = null;
+        loginError = "";
+        render();
+      } catch (error) {
+        adminSessionPassword = "";
+        loginError = error.message || "ورود به پنل مدیریت ناموفق بود.";
+        render();
+      }
+    }
+
+    function adminLogout() {
+      screen = "home";
+      builderOpen = false;
+      adminSessionPassword = "";
+      db = { surveys: [] };
+      render();
+    }
+
+    function toggleBuilder() {
+      builderOpen = !builderOpen;
+      if (builderOpen && draft.questions.length === 0) {
+        // شروع فرم با یک سوال خالی، برای راحتی کار
+        draft.questions.push({ text: "", image: "", options: ["", ""] });
+      }
+      render();
+    }
+
+    function addQuestion() {
+      draft.questions.push({ text: "", image: "", options: ["", ""] });
+      builderOpen = true;
+      render();
+    }
+
+    function removeQuestion(index) {
+      draft.questions.splice(index, 1);
+      render();
+    }
+
+    function addOption(questionIndex) {
+      draft.questions[questionIndex].options.push("");
+      render();
+    }
+
+    function removeOption(questionIndex, optionIndex) {
+      const options = draft.questions[questionIndex].options;
+      if (options.length <= 2) {
+        alert("هر سوال باید دست‌کم دو گزینه داشته باشد.");
+        return;
+      }
+      options.splice(optionIndex, 1);
+      render();
+    }
+
+    function removeQuestionImage(index) {
+      draft.questions[index].image = "";
+      render();
+    }
+
+    function handleQuestionImage(index, input) {
+      const file = input.files && input.files[0];
+      if (!file) return;
+      if (!file.type.startsWith("image/")) {
+        alert("لطفاً یک فایل تصویری انتخاب کنید.");
+        return;
+      }
+      if (file.size > 8 * 1024 * 1024) {
+        alert("حجم تصویر باید کمتر از ۸ مگابایت باشد.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const image = new Image();
+        image.onload = () => {
+          const maxSide = 950;
+          const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.round(image.width * scale);
+          canvas.height = Math.round(image.height * scale);
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+          draft.questions[index].image = canvas.toDataURL("image/jpeg", 0.66);
+          render();
+        };
+        image.onerror = () => alert("خواندن تصویر با خطا روبه‌رو شد.");
+        image.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function publishSurvey() {
+      const title = draft.title.trim();
+      if (!title) {
+        alert("لطفاً عنوان پرسشنامه را وارد کنید.");
+        document.getElementById("draftTitle")?.focus();
+        return;
+      }
+      if (draft.questions.length === 0) {
+        alert("حداقل یک سوال به پرسشنامه اضافه کنید.");
+        return;
+      }
+
+      for (let i = 0; i < draft.questions.length; i++) {
+        const q = draft.questions[i];
+        q.text = q.text.trim();
+        q.options = q.options.map(o => o.trim()).filter(Boolean);
+        if (!q.text) {
+          alert(`متن سوال ${i + 1} را وارد کنید.`);
+          return;
+        }
+        if (q.options.length < 2) {
+          alert(`سوال ${i + 1} باید دست‌کم دو گزینه‌ی غیرخالی داشته باشد.`);
+          return;
+        }
+      }
+
+      const survey = {
+        id: makeId(),
+        title,
+        description: draft.description.trim(),
+        questions: draft.questions.map(q => ({
+          text: q.text,
+          image: q.image || "",
+          options: [...q.options]
+        })),
+        submissions: [],
+        published: true,
+        createdAt: new Date().toISOString()
+      };
+
+      try {
+        await apiRequest("/api/surveys", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "x-admin-password": adminSessionPassword },
+          body: JSON.stringify({ action: "create", survey })
+        });
+        await refreshDB(true);
+        draft = { title: "", description: "", questions: [] };
+        builderOpen = false;
+        adminDetailsId = null;
+        render();
+        showToast("پرسشنامه با موفقیت منتشر شد.");
+      } catch (error) {
+        alert("انتشار پرسشنامه انجام نشد: " + error.message);
+      }
+    }
+
+    function toggleDetails(id) {
+      adminDetailsId = adminDetailsId === id ? null : id;
+      render();
+    }
+
+    async function deleteSurvey(id) {
+      const survey = db.surveys.find(s => s.id === id);
+      if (!survey) return;
+      if (!confirm(`پرسشنامه‌ی «${survey.title}» و همه‌ی پاسخ‌های آن حذف شود؟`)) return;
+      try {
+        await apiRequest(`/api/surveys?id=${encodeURIComponent(id)}`, {
+          method: "DELETE",
+          headers: { "x-admin-password": adminSessionPassword }
+        });
+        if (adminDetailsId === id) adminDetailsId = null;
+        await refreshDB(true);
+        render();
+        showToast("پرسشنامه حذف شد.");
+      } catch (error) {
+        alert("حذف پرسشنامه انجام نشد: " + error.message);
+      }
+    }
+
+    async function openRespondent() {
+      respondentFirst = "";
+      respondentLast = "";
+      respondentName = "";
+      try {
+        await refreshDB(false, "");
+        screen = "respondent";
+        render();
+      } catch (error) {
+        alert("دریافت پرسشنامه‌ها انجام نشد: " + error.message + "\nتنظیمات API و GitHub را بررسی کنید.");
+      }
+    }
+
+    async function enterRespondent(event) {
+      event.preventDefault();
+      respondentFirst = document.getElementById("firstName").value.trim();
+      respondentLast = document.getElementById("lastName").value.trim();
+      if (!respondentFirst || !respondentLast) return;
+      respondentName = `${respondentFirst} ${respondentLast}`;
+      try {
+        await refreshDB(false, respondentName);
+        screen = "respondent";
+        render();
+      } catch (error) {
+        alert("دریافت پرسشنامه‌ها انجام نشد: " + error.message);
+      }
+    }
+
+    async function changeRespondent() {
+      respondentName = "";
+      try {
+        await refreshDB(false, "");
+        screen = "respondent";
+        render();
+      } catch (error) {
+        alert("دریافت پرسشنامه‌ها انجام نشد: " + error.message);
+      }
+    }
+
+    function openSurvey(id) {
+      const survey = db.surveys.find(s => s.id === id && s.published !== false);
+      if (!survey) return;
+      const already = Boolean(survey.completed);
+      if (already) {
+        showToast("این پرسشنامه قبلاً با این نام ثبت شده است.");
+        screen = "respondent";
+        render();
+        return;
+      }
+      currentSurveyId = id;
+      screen = "answerSurvey";
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    async function backToSurveyList() {
+      screen = "respondent";
+      currentSurveyId = null;
+      try {
+        await refreshDB(false, respondentName);
+        render();
+      } catch (error) {
+        alert("بازیابی فهرست پرسشنامه‌ها انجام نشد: " + error.message);
+      }
+    }
+
+    async function submitResponse(event) {
+      event.preventDefault();
+      const survey = db.surveys.find(s => s.id === currentSurveyId && s.published !== false);
+      if (!survey) {
+        screen = "respondent";
+        render();
+        return;
+      }
+
+      const already = Boolean(survey.completed);
+      if (already) {
+        alert("پاسخی با این نام قبلاً ثبت شده است.");
+        screen = "respondent";
+        render();
+        return;
+      }
+
+      const answers = [];
+      for (let i = 0; i < survey.questions.length; i++) {
+        const selected = document.querySelector(`input[name="q_${i}"]:checked`);
+        if (!selected) {
+          alert(`لطفاً به سوال ${i + 1} پاسخ دهید.`);
+          return;
+        }
+        answers.push({
+          question: survey.questions[i].text,
+          answer: survey.questions[i].options[Number(selected.value)]
+        });
+      }
+
+      try {
+        await apiRequest("/api/surveys", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "respond",
+            surveyId: currentSurveyId,
+            submission: {
+              name: respondentName,
+              submittedAt: new Date().toISOString(),
+              answers
+            }
+          })
+        });
+        screen = "thanks";
+        render();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (error) {
+        alert("ثبت پاسخ انجام نشد: " + error.message);
+        try { await refreshDB(false, respondentName); } catch (_) {}
+        screen = "respondent";
+        render();
+      }
+    }
+
+    function showToast(message) {
+      const old = document.querySelector(".toast");
+      if (old) old.remove();
+      const toast = document.createElement("div");
+      toast.className = "toast";
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    render();
+  </script>
+</body>
+</html>
